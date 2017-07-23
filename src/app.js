@@ -5,9 +5,17 @@ import 'jquery-mask-plugin';
 
 import Backbone from 'backbone';
 
+// implement save all
+Backbone.Collection.prototype.save = function(options) {
+  return $.when.apply($, (this.models || []).map((m) => {
+    return m.hasChanged() || !m.get('id') ? m.save(null, options) : m;
+  }));
+};
+
 import React from 'react';
 import {render} from 'react-dom';
 import JQuery from 'jquery';
+import Cookies from 'js-cookie';
 
 import App from './component/app';
 import Search from './component/search';
@@ -34,5 +42,6 @@ render(<App/>, document.getElementById('app-container'));
 // define router as global
 global.router = new Router();
 global.$ = JQuery;
+global.Cookies = Cookies;
 
 Backbone.history.start();

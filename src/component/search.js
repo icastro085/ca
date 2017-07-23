@@ -1,11 +1,14 @@
 import React from 'react';
 import ReactDom from 'react-dom';
+import Promise from 'bluebird';
 
 import Vehicles from './../collection/vehicles';
 
 import SearchTable from './search-table';
 import SearchNav from './search-nav';
 import SearchForm from './search-form';
+
+import InitialData from './../config/initial-data.json';
 
 let vehicles = new Vehicles();
 
@@ -22,15 +25,17 @@ export default class Search extends React.Component {
       text: '',
     };
 
-    vehicles.fetch().then(
-      () => this.setVehicles()
-    );
+    vehicles.fetch().then(() => this.setVehicles());
   }
 
   componentDidMount() {
     vehicles.on({
       destroy: () => this.setVehicles(),
     });
+
+    if (!Cookies.get('isFirst')) {
+      this.createInitialList();
+    }
   }
 
   render () {
@@ -129,6 +134,15 @@ export default class Search extends React.Component {
     }
 
     return vehicles;
+  }
+
+  createInitialList() {
+    Cookies.set('isFirst', true);
+    let data = InitialData.map((v) => new Promise((resolve, reject) => {
+        vehicles.create(v).then(resolve).catch(reject);
+    }));
+    Promise.all(data)
+      .then(() => this.setVehicles());
   }
 
 }

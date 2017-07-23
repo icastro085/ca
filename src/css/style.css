@@ -27,6 +27,14 @@ header {
   margin-top: 30px;
 }
 
+.search thead tr{
+  background-color: #F8FAFC;
+}
+
+.search tbody tr{
+  background-color: #FFFFFF;
+}
+
 .image-hover span {
   position: relative;
 }
