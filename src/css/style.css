@@ -4,10 +4,15 @@ html, body {
   background-color: #F8FAFC;
 }
 
+.logo {
+  background-image: url('/img/logo.png');
+  height: 50px;
+  width: 205px;
+}
 
 header {
   background-color: #4B7FEA;
-  height: 70px;
+  height: 50px;
   color: #FFF;
   margin-bottom: 30px;
 }
