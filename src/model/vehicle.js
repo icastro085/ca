@@ -1,6 +1,6 @@
 import {LocalStorage} from 'backbone.localstorage';
 
-export default class VehicleModel extends Backbone.Model {
+export default class Vehicle extends Backbone.Model {
   constructor(attr, options) {
     super(attr, options);
 

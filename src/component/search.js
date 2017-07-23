@@ -27,6 +27,12 @@ export default class Search extends React.Component {
     );
   }
 
+  componentDidMount() {
+    vehicles.on({
+      destroy: () => this.setVehicles(),
+    });
+  }
+
   render () {
     let {
       vehicles,
@@ -55,13 +61,13 @@ export default class Search extends React.Component {
 
   setVehicles() {
     let vehiclesResult = this.filterVehicles(vehicles);
+    console.log('setVehicles');
 
     if (vehiclesResult.length) {
       let {page, itemsByPage} = this.state;
       let begin = page * itemsByPage;
       let end = begin + itemsByPage;
       let totalItems = vehiclesResult.length;
-      console.log(vehiclesResult);
       this.setState({
         vehicles: vehiclesResult.slice(
           begin,

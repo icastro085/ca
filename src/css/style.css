@@ -39,6 +39,10 @@ header {
   display: block;
 }
 
+[name="placa"] {
+  text-transform: uppercase;
+}
+
 .pagination > .active > a,
 .pagination > .active > span,
 .pagination > .active > a:hover,

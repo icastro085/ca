@@ -28,12 +28,14 @@ export default class SearchTable extends React.Component {
               <th>Foto</th>
               <th>Combustível</th>
               <th>Valor</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             {lines}
           </tbody>
         </table>
+        <div ref="alert"></div>
       </article>
     );
   }

@@ -19,7 +19,9 @@ export default class SearchForm extends React.Component {
         <form onSubmit={(e) => this.onSubmit(e)} method="POST">
           <div className="row">
             <div className="col-md-6">
-              <button className="btn btn-success btn-lg">
+              <button
+                className="btn btn-success btn-lg"
+                onClick={() => this.newVehicle()}>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 Novo Carro
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -61,5 +63,9 @@ export default class SearchForm extends React.Component {
     if (typeof onSubmit === 'function') {
       onSubmit(text);
     }
+  }
+
+  newVehicle() {
+    router.navigate('/vehicle', {trigger: true});
   }
 }
