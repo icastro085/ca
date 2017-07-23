@@ -21,7 +21,14 @@ export default class SearchTable extends React.Component {
         <table className="table search">
           <thead>
             <tr>
-              <th><input type="checkbox"/></th>
+              <th>
+                <div className="checkbox">
+                <label>
+                  <input type="checkbox"/>
+                  <span className="cr"><i className="cr-icon glyphicon glyphicon-ok"></i></span>
+                </label>
+                </div>
+              </th>
               <th>Placa</th>
               <th>Modelo</th>
               <th>Marca</th>

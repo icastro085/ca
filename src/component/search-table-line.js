@@ -22,7 +22,12 @@ export default class SearchTableLine extends React.Component {
     return (
       <tr className={className}>
         <td>
-          <input type="checkbox" onClick={() => this.toggleActiveLine()}/>
+          <div className="checkbox">
+            <label>
+            <input type="checkbox" onClick={() => this.toggleActiveLine()}/>
+            <span className="cr"><i className="cr-icon glyphicon glyphicon-ok"></i></span>
+            </label>
+          </div>
         </td>
         <td>
           <a href="#" onClick={(e) => this.edit(e)}>

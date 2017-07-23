@@ -1,3 +1,8 @@
+@import "checkbox.css";
+@import "pagination.css";
+@import "search.css";
+@import "register.css";
+
 html, body {
   margin: 0;
   padding: 0;
@@ -20,64 +25,4 @@ header {
 #container-body {
   padding-left: 40px;
   padding-right: 40px;
-}
-
-.search {
-  border: 1px solid #C9D2DC;
-  margin-top: 30px;
-}
-
-.search thead tr{
-  background-color: #F8FAFC;
-}
-
-.search tbody tr{
-  background-color: #FFFFFF;
-}
-
-.image-hover span {
-  position: relative;
-}
-
-.image-hover img {
-  display: none;
-  max-width: 100px;
-  max-height: 100px;
-  position: absolute;
-  top: -70px;
-  left: 0;
-}
-
-.image-hover a:hover + img {
-  display: block;
-}
-
-[name="placa"] {
-  text-transform: uppercase;
-}
-
-.no-vehicles {
-  margin-top: 30px;
-}
-
-.pagination > .active > a,
-.pagination > .active > span,
-.pagination > .active > a:hover,
-.pagination > .active > span:hover,
-.pagination > .active > a:focus,
-.pagination > .active > span:focus {
-  background-color: #DAE8FB;
-  color: #486080;
-  border-color: #94C5F6;
-}
-
-.pagination > li > a, .pagination > li > span {
-  color: #486080;
-}
-
-.pagination > li > a:hover,
-.pagination > li > span:hover,
-.pagination > li > a:focus,
-.pagination > li > span:focus {
-  background-color: #FEFBEA;
 }

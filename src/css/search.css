@@ -1,0 +1,97 @@
+.no-vehicles {
+  margin-top: 30px;
+}
+
+.search {
+  // border: 1px solid #C9D2DC;
+  margin-top: 30px;
+}
+
+.search thead tr{
+  background-color: #F8FAFC;
+}
+
+.search tbody tr{
+  background-color: #FFFFFF;
+}
+
+.image-hover span {
+  position: relative;
+}
+
+.image-hover img {
+  display: none;
+  max-width: 100px;
+  max-height: 100px;
+  position: absolute;
+  top: -70px;
+  left: 0;
+}
+
+.image-hover a:hover + img {
+  display: block;
+}
+
+.search .radio, .checkbox {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.search .radio label, .search .checkbox label {
+  padding-left: 0px;
+}
+
+.search .active .checkbox .cr, .radio .cr{
+  border-color: #94C5F6;
+}
+
+/* border of table */
+.search tr td:first-of-type,
+.search tr th:first-of-type {
+  border-left: 1px solid #C9D2DC;
+}
+
+.search tr td:last-of-type,
+.search tr th:last-of-type {
+  border-right: 1px solid #C9D2DC;
+}
+
+.search tr td:last-of-type,
+.search tr th:last-of-type {
+  border-right: 1px solid #C9D2DC;
+}
+
+.search tr:last-of-type td {
+  border-bottom: 1px solid #C9D2DC;
+}
+
+.search tr th {
+  border-top: 1px solid #C9D2DC !important;
+}
+
+/* border of table active */
+.table > tbody > tr.active > td{
+  background-color: #DAE8FB;
+  border-top-color: #94C5F6;
+}
+
+.table > tbody > tr.active > td:first-of-type {
+  border-left-color: #94C5F6;
+}
+
+.table > tbody > tr.active > td:last-of-type {
+  border-right-color: #94C5F6;
+}
+
+.search tr.active:last-of-type td {
+  border-bottom: 1px solid #94C5F6;
+}
+
+.search tr.active + tr > th,
+.search tr.active + tr > td {
+  border-top-color: #94C5F6;
+}
+
+.search.table > thead > tr > th {
+  border-bottom: 0;
+}
