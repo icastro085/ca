@@ -23,7 +23,7 @@ export default class Register extends React.Component {
       marca : '',
       modelo : '',
       placa : '',
-      valor : 0,
+      valor : null,
     });
 
     if (id) {

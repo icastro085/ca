@@ -45,8 +45,13 @@ export default class Search extends React.Component {
       <section>
 
         <SearchForm onSubmit={(text) => this.onSubmit(text)}/>
-
-        <SearchTable vehicles={vehicles}/>
+        {
+          !vehicles.length ?
+          <div className="alert alert-warning no-vehicles">
+            <b>Atenção!</b> Não há veículos cadastrados.
+          </div> :
+          <SearchTable vehicles={vehicles}/>
+        }
 
         <SearchNav
           key={totalItems + page}
@@ -61,7 +66,6 @@ export default class Search extends React.Component {
 
   setVehicles() {
     let vehiclesResult = this.filterVehicles(vehicles);
-    console.log('setVehicles');
 
     if (vehiclesResult.length) {
       let {page, itemsByPage} = this.state;

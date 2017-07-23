@@ -43,6 +43,10 @@ header {
   text-transform: uppercase;
 }
 
+.no-vehicles {
+  margin-top: 30px;
+}
+
 .pagination > .active > a,
 .pagination > .active > span,
 .pagination > .active > a:hover,

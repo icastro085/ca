@@ -16,12 +16,13 @@ export default class SearchForm extends React.Component {
 
     return (
       <article>
-        <form onSubmit={(e) => this.onSubmit(e)} method="POST">
+        <form onSubmit={(e) => this.onSubmit(e)}>
           <div className="row">
             <div className="col-md-6">
               <button
+                type="button"
                 className="btn btn-success btn-lg"
-                onClick={() => this.newVehicle()}>
+                onClick={() => {this.newVehicle()}}>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 Novo Carro
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -34,7 +35,7 @@ export default class SearchForm extends React.Component {
                   type="text"
                   name="text"
                   className="form-control"
-                  placeholder="Pesquisar"
+                  placeholder="Ex.: Combustível e/ou Marca"
                   value={text}
                   onChange={(e) => this.onChange(e)}/>
                 <span className="input-group-addon">
@@ -63,6 +64,8 @@ export default class SearchForm extends React.Component {
     if (typeof onSubmit === 'function') {
       onSubmit(text);
     }
+
+    return false;
   }
 
   newVehicle() {
