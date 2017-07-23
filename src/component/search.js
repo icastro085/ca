@@ -10,12 +10,15 @@ import SearchForm from './search-form';
 
 import InitialData from './../config/initial-data.json';
 
-let vehicles = new Vehicles();
+let vehicles = null;
 
 export default class Search extends React.Component {
 
   constructor(props) {
     super(props);
+
+    // force reload fetch
+    vehicles = new Vehicles();
 
     this.state = {
       vehicles: [],
