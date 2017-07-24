@@ -42,14 +42,14 @@
 
 .checkbox label input[type="checkbox"] + .cr > .cr-icon,
 .radio label input[type="radio"] + .cr > .cr-icon {
-    transform: scale(3) rotateZ(-20deg);
+    //transform: scale(3) rotateZ(-20deg);
     opacity: 0;
-    transition: all .3s ease-in;
+    //transition: all .3s ease-in;
 }
 
 .checkbox label input[type="checkbox"]:checked + .cr > .cr-icon,
 .radio label input[type="radio"]:checked + .cr > .cr-icon {
-    transform: scale(1) rotateZ(0deg);
+    //transform: scale(1) rotateZ(0deg);
     opacity: 1;
 }
 

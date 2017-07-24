@@ -2,14 +2,20 @@ import React from 'react';
 import ReactDom from 'react-dom';
 
 import SweetAlert from 'react-bootstrap-sweetalert';
+import Backbone from 'backbone';
 
 export default class SearchTableLine extends React.Component {
 
   constructor(props) {
     super(props);
+    let {vehicle} = this.props;
     this.state = {
-      lineActived: false,
+      lineActived: vehicle.isActive(),
     };
+
+    vehicle.on('change:status', () => {
+      this.setState({lineActived: vehicle.isActive()});
+    });
   }
 
   render () {
@@ -24,7 +30,7 @@ export default class SearchTableLine extends React.Component {
         <td>
           <div className="checkbox">
             <label>
-            <input type="checkbox" onClick={() => this.toggleActiveLine()}/>
+            <input type="checkbox" checked={lineActived} onClick={() => this.toggleActiveLine()}/>
             <span className="cr"><i className="cr-icon glyphicon glyphicon-ok"></i></span>
             </label>
           </div>
@@ -66,6 +72,12 @@ export default class SearchTableLine extends React.Component {
     let {lineActived} = this.state;
     lineActived = !lineActived;
     this.setState({lineActived});
+
+    let {vehicle} = this.props;
+    vehicle.setActived(lineActived);
+
+
+    Backbone.trigger('change:status-all');
   }
 
   edit(e) {

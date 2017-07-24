@@ -4,9 +4,29 @@ import ReactDom from 'react-dom';
 import SearchTableLine from './search-table-line';
 
 export default class SearchTable extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    Backbone.on('change:status-all', () => this.onChangeAllStatus());
+
+    this.state = {
+      activeAll: false,
+    };
+  }
+
+  onChangeAllStatus() {
+    let {vehicles} = this.props;
+    let vehiclesActive = vehicles.filter((vehicle) => {
+      return vehicle.isActive();
+    }).length;
+    this.setState({activeAll: vehiclesActive === vehicles.length});
+  }
+
   render () {
 
     let {vehicles} = this.props;
+    let {activeAll}= this.state;
     let lines = [];
 
     lines = (vehicles || [])
@@ -24,7 +44,10 @@ export default class SearchTable extends React.Component {
               <th>
                 <div className="checkbox">
                 <label>
-                  <input type="checkbox"/>
+                  <input
+                    ref="checkAll" checked={activeAll}
+                    type="checkbox" onClick={() => this.toggleActive()}
+                    />
                   <span className="cr"><i className="cr-icon glyphicon glyphicon-ok"></i></span>
                 </label>
                 </div>
@@ -45,5 +68,17 @@ export default class SearchTable extends React.Component {
         <div ref="alert"></div>
       </article>
     );
+  }
+
+  toggleActive() {
+    let {vehicles} = this.props;
+    let activeAll = this.refs.checkAll.checked;
+
+    vehicles.map((vehicle) => {
+      vehicle.setActived(activeAll);
+      vehicle.trigger('change:status');
+    });
+
+    this.setState({activeAll});
   }
 }

@@ -21,4 +21,12 @@ export default class Vehicle extends Backbone.Model {
     let url = `/vehicle/${id}`;
     return url;
   }
+
+  setActived(active) {
+    this.active = active;
+  }
+
+  isActive() {
+    return !!this.active;
+  }
 };
