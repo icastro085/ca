@@ -65,6 +65,13 @@ export default class SearchTable extends React.Component {
             {lines}
           </tbody>
         </table>
+
+        <button
+          type="button"
+          className="btn btn-danger btn-lg"
+          onClick={() => this.removeAll()}>
+          Remover Todos os Selecionados
+        </button>
         <div ref="alert"></div>
       </article>
     );
@@ -80,5 +87,16 @@ export default class SearchTable extends React.Component {
     });
 
     this.setState({activeAll});
+  }
+
+  removeAll() {
+    let {vehicles} = this.props;
+    vehicles.map((vehicle) => {
+      if (vehicle.isActive()) {
+        vehicle.destroy();
+      }
+
+      this.setState({activeAll: false});
+    });
   }
 }
