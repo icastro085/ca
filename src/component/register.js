@@ -11,19 +11,25 @@ const GASOLINA = 'Gasolina';
 
 const FUEL = [GASOLINA, ALCOOL, FLEX];
 
+/**
+ * @class Register
+ */
 export default class Register extends React.Component {
-
+  /**
+   * @method constructor
+   * @param {Object} props
+   */
   constructor(props) {
     super(props);
     let {id} = this.props;
     let vehicle = new Vehicle({
       id: id || null,
-      combustivel : '',
-      imagem : '',
-      marca : '',
-      modelo : '',
-      placa : '',
-      valor : '',
+      combustivel: '',
+      imagem: '',
+      marca: '',
+      modelo: '',
+      placa: '',
+      valor: '',
     });
 
     if (id) {
@@ -36,12 +42,19 @@ export default class Register extends React.Component {
     };
   }
 
+  /**
+   * @method componentDidMount
+   */
   componentDidMount() {
-    $(this.refs.valor).mask('#.##0,00', {reverse: true});
-    $(this.refs.placa).mask('AAA-9999');
+    $(this.refsValor).mask('#.##0,00', {reverse: true});
+    $(this.refsPlaca).mask('AAA-9999');
   }
 
-  render () {
+  /**
+   * @method render
+   * @return {Object}
+   */
+  render() {
     let {vehicle, errors} = this.state;
     let options = FUEL.map((item) => this.getOptionSelect(item));
     options.unshift(<option key="select" value="">Selecione</option>);
@@ -131,7 +144,7 @@ export default class Register extends React.Component {
             <input
               type="text"
               name="placa"
-              ref="placa"
+              ref={(ref) => this.refsPlaca = ref}
               className="form-control"
               placeholder="Ex.: FFF-5498"
               value={vehicle.get('placa')}
@@ -149,7 +162,7 @@ export default class Register extends React.Component {
             <input
               type="text"
               name="valor"
-              ref="valor"
+              ref={(ref) => this.refsValor = ref}
               className="form-control text-right"
               placeholder="Ex.: 20.000,00"
               value={vehicle.get('valor')}
@@ -169,15 +182,23 @@ export default class Register extends React.Component {
           onClick={() => this.save()}>Salvar</button>
 
         <br/><br/><br/><br/>
-        <div ref="alert"></div>
+        <div ref={(ref) => this.refsAlert = ref}></div>
       </form>
     );
   }
 
-  onSubmit() {
+  /**
+   * @method onSubmit
+   * @param {Object} e
+   */
+  onSubmit(e) {
     e.preventDefault();
   }
 
+  /**
+   * @method save
+   * @param {Object} e
+   */
   onChange(e) {
     let {name, value} = e.target;
     let {vehicle} = this.state;
@@ -190,14 +211,25 @@ export default class Register extends React.Component {
     this.setState({vehicle});
   }
 
+  /**
+   * @method back
+   * @param {String} item
+   * @return {Object}
+   */
   getOptionSelect(item) {
     return <option key={item} value={item}>{item}</option>;
   }
 
+  /**
+   * @method back
+   */
   back() {
     router.navigate('/', true);
   }
 
+  /**
+   * @method save
+   */
   save() {
     let {vehicle} = this.state;
 
@@ -205,7 +237,7 @@ export default class Register extends React.Component {
       // parsing to db format
       vehicle.set(
         'valor',
-        this.refs.valor.value
+        this.refsValor.value
           .replace(/[.]/g, '')
           .replace(/[,]/g, '.')
       );
@@ -213,7 +245,7 @@ export default class Register extends React.Component {
       vehicle.save()
         .then(() => {
           // parsing to ui format
-          let price = new Number(vehicle.get('valor'));
+          let price = parseFloat(vehicle.get('valor'));
           price = price.toLocaleString('pt-Br', {minimumFractionDigits: 2});
           vehicle.set('valor', price);
           this.setState({
@@ -226,32 +258,45 @@ export default class Register extends React.Component {
     }
   }
 
+  /**
+   * @method saveSuccess
+   */
   saveSuccess() {
     ReactDom.render(
       <SweetAlert
         type="success"
         title="Registro salvo com sucesso!"
         onConfirm={() => this.hideAlert()}/>,
-      this.refs.alert
+      this.refsAlert
     );
   }
 
+  /**
+   * @method saveFail
+   */
   saveFail() {
     ReactDom.render(
       <SweetAlert
         type="danger"
         title="Ops! Erro ao tentar salvar, tente novamente"
         onConfirm={() => this.hideAlert()}/>,
-      this.refs.alert
+      this.refsAlert
     );
   }
 
+  /**
+   * @method hideAlert
+   */
   hideAlert() {
     ReactDom.unmountComponentAtNode(
-      this.refs.alert
+      this.refsAlert
     );
   }
 
+  /**
+   * @method validate
+   * @return {Boolean}
+   */
   validate() {
     let {vehicle, errors} = this.state;
 

@@ -1,14 +1,24 @@
 import React from 'react';
-import ReactDom from 'react-dom';
 
 import Header from './header';
 
+/**
+ * @class App
+ */
 export default class App extends React.Component {
-  constructor() {
-    super();
+  /**
+   * @method constructor
+   * @param {Object} props
+   */
+  constructor(props) {
+    super(props);
   }
 
-  render () {
+  /**
+   * @method render
+   * @return {Object}
+   */
+  render() {
     return (
     <article className="container">
       <Header/>

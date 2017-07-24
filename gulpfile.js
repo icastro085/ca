@@ -5,7 +5,7 @@ const WebpackDevServer = require('webpack-dev-server');
 const webpackConfig = require('./webpack.config');
 
 const gutil = require('gulp-util');
-const sequence = require('gulp-sequence');
+// const sequence = require('gulp-sequence');
 
 const open = require('gulp-open');
 const PORT = 9000;
@@ -32,7 +32,7 @@ gulp.task('webpack-dev-server', (callback) => {
   });
 
   server.listen(PORT, 'localhost', (err) => {
-    if(err) {
+    if (err) {
       throw new gutil.PluginError('webpack-dev-server', err);
     }
 
@@ -73,11 +73,11 @@ gulp.task('watch', ()=> {
     './src/index.html',
   ], ['copy']);
 
-  // gulp.watch([
-  //   './src/**/**/*.js',
-  //   'gulpfile.js',
-  //   'webpack.config.js',
-  // ], ['eslint']);
+  gulp.watch([
+    './src/**/**/*.js',
+    'gulpfile.js',
+    'webpack.config.js',
+  ], ['eslint']);
 });
 
 gulp.task('build', ['copy', 'webpack']);
@@ -88,4 +88,4 @@ gulp.task('open', () => {
 });
 
 gulp.task('default', ['build']);
-gulp.task('start', [/*'eslint', */'webpack-dev-server', 'open', 'watch']);
+gulp.task('start', [/* 'eslint', */'webpack-dev-server', 'open', 'watch']);

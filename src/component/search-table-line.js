@@ -4,8 +4,14 @@ import ReactDom from 'react-dom';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import Backbone from 'backbone';
 
+/**
+ * @class SearchTableLine
+ */
 export default class SearchTableLine extends React.Component {
-
+  /**
+   * @method constructor
+   * @param {Object} props
+   */
   constructor(props) {
     super(props);
     let {vehicle} = this.props;
@@ -18,11 +24,15 @@ export default class SearchTableLine extends React.Component {
     });
   }
 
-  render () {
+  /**
+   * @method render
+   * @return {Object}
+   */
+  render() {
     let {vehicle} = this.props;
     let {lineActived} = this.state;
     let className = lineActived ? 'active' : '';
-    let price = new Number(vehicle.get('valor'));
+    let price = parseFloat(vehicle.get('valor'));
     price = price.toLocaleString('pt-Br', {minimumFractionDigits: 2});
 
     return (
@@ -30,8 +40,13 @@ export default class SearchTableLine extends React.Component {
         <td>
           <div className="checkbox">
             <label>
-            <input type="checkbox" checked={lineActived} onClick={() => this.toggleActiveLine()}/>
-            <span className="cr"><i className="cr-icon glyphicon glyphicon-ok"></i></span>
+            <input
+              type="checkbox"
+              checked={lineActived}
+              onClick={() => this.toggleActiveLine()}/>
+            <span className="cr">
+              <i className="cr-icon glyphicon glyphicon-ok"></i>
+              </span>
             </label>
           </div>
         </td>
@@ -55,6 +70,11 @@ export default class SearchTableLine extends React.Component {
     );
   }
 
+  /**
+   * @method getImagem
+   * @param {String} image
+   * @return {Object}
+   */
   getImagem(image) {
     if (image) {
       return (
@@ -62,12 +82,15 @@ export default class SearchTableLine extends React.Component {
           <a href="#">Imagem</a>
           <img src={image} className="thumbnail"/>
         </span>
-      )
+      );
     }
 
-    return <span>Sem Foto</span>
+    return <span>Sem Foto</span>;
   }
 
+  /**
+   * @method toggleActiveLine
+   */
   toggleActiveLine() {
     let {lineActived} = this.state;
     lineActived = !lineActived;
@@ -80,16 +103,28 @@ export default class SearchTableLine extends React.Component {
     Backbone.trigger('change:status-all');
   }
 
+  /**
+   * @method edit
+   * @param {Object} e
+   */
   edit(e) {
     e.preventDefault();
     let {vehicle} = this.props;
     router.navigate(`/vehicle/${vehicle.get('id')}`, true);
   }
 
+  /**
+   * @method getParentComponet
+   * @return {Object}
+   */
   getParentComponet() {
     return this._reactInternalInstance._currentElement._owner._instance;
   }
 
+  /**
+   * @method remove
+   * @param {Object} e
+   */
   remove(e) {
     e.preventDefault();
     ReactDom.render(
@@ -100,19 +135,25 @@ export default class SearchTableLine extends React.Component {
         cancelBtnBsStyle="default"
         onConfirm={() => this.onConfirm()}
         onCancel={() => this.hideAlert()}/>,
-      this.getParentComponet().refs.alert
+      this.getParentComponet().refsAlert
     );
   }
 
+  /**
+   * @method onConfirm
+   */
   onConfirm() {
     let {vehicle} = this.props;
     this.hideAlert();
     vehicle.destroy();
   }
 
+  /**
+   * @method hideAlert
+   */
   hideAlert() {
     ReactDom.unmountComponentAtNode(
-      this.getParentComponet().refs.alert
+      this.getParentComponet().refsAlert
     );
   }
 }

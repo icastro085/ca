@@ -1,8 +1,13 @@
 import React from 'react';
-import ReactDom from 'react-dom';
 
+/**
+ * @class SearchForm
+ */
 export default class SearchForm extends React.Component {
-
+  /**
+   * @method constructor
+   * @param {Object} props
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -10,8 +15,11 @@ export default class SearchForm extends React.Component {
     };
   }
 
-  render () {
-
+  /**
+   * @method render
+   * @return {Object}
+   */
+  render() {
     let {text} = this.state;
 
     return (
@@ -22,7 +30,7 @@ export default class SearchForm extends React.Component {
               <button
                 type="button"
                 className="btn btn-success btn-lg"
-                onClick={() => {this.newVehicle()}}>
+                onClick={() => this.newVehicle()}>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 Novo Carro
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -49,6 +57,10 @@ export default class SearchForm extends React.Component {
     );
   }
 
+  /**
+   * @method onChange
+   * @param {Object} e
+   */
   onChange(e) {
     let {value} = e.target;
     this.setState({
@@ -56,6 +68,10 @@ export default class SearchForm extends React.Component {
     });
   }
 
+  /**
+   * @method onSubmit
+   * @param {Object} e
+   */
   onSubmit(e) {
     e.preventDefault();
     let {text} = this.state;
@@ -64,10 +80,11 @@ export default class SearchForm extends React.Component {
     if (typeof onSubmit === 'function') {
       onSubmit(text);
     }
-
-    return false;
   }
 
+  /**
+   * @method newVehicle
+   */
   newVehicle() {
     router.navigate('/vehicle', {trigger: true});
   }

@@ -21,13 +21,13 @@ const Router = Backbone.Router.extend({
     'vehicle/:id': 'register',
   },
 
-  search: () => {
-    render(<Search/>, document.getElementById('container-body'));
-  },
+  search: () => render(
+    <Search/>, document.getElementById('container-body')
+  ),
 
-  register: (id) => {
-    render(<Register id={id}/>, document.getElementById('container-body'));
-  }
+  register: (id) => render(
+    <Register id={id}/>, document.getElementById('container-body')
+  ),
 });
 
 render(<App/>, document.getElementById('app-container'));

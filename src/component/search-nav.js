@@ -1,8 +1,13 @@
 import React from 'react';
-import ReactDom from 'react-dom';
 
+/**
+ * @class SearchNav
+ */
 export default class SearchNav extends React.Component {
-
+  /**
+   * @method constructor
+   * @param {Object} props
+   */
   constructor(props) {
     super(props);
     let {
@@ -11,15 +16,19 @@ export default class SearchNav extends React.Component {
     } = this.props;
 
     this.state = {
-      numberOfPage: Math.ceil(totalItems/itemsByPage)
+      numberOfPage: Math.ceil(totalItems/itemsByPage),
     };
   }
 
-  render () {
+  /**
+   * @method render
+   * @return {Object}
+   */
+  render() {
     let {
       totalItems,
       itemsByPage,
-      page
+      page,
     } = this.props;
 
     if (totalItems <= itemsByPage) {
@@ -59,6 +68,10 @@ export default class SearchNav extends React.Component {
     );
   }
 
+  /**
+   * @method onChangePage
+   * @param {Number} page
+   */
   onChangePage(page) {
     let {onChangePage} = this.props;
     if (typeof onChangePage === 'function') {
@@ -66,6 +79,9 @@ export default class SearchNav extends React.Component {
     }
   }
 
+  /**
+   * @method next
+   */
   next() {
     let {page} = this.props;
     let {numberOfPage} = this.state;
@@ -75,9 +91,11 @@ export default class SearchNav extends React.Component {
     }
   }
 
+  /**
+   * @method prev
+   */
   prev() {
     let {page} = this.props;
-    let {numberOfPage} = this.state;
     page--;
     if (page >= 0) {
       this.onChangePage(page);

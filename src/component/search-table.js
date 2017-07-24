@@ -1,10 +1,18 @@
 import React from 'react';
 import ReactDom from 'react-dom';
+import SweetAlert from 'react-bootstrap-sweetalert';
+import Backbone from 'backbone';
 
 import SearchTableLine from './search-table-line';
 
+/**
+ * @class SearchTable
+ */
 export default class SearchTable extends React.Component {
-
+  /**
+   * @method constructor
+   * @param {Object} props
+   */
   constructor(props) {
     super(props);
 
@@ -15,6 +23,9 @@ export default class SearchTable extends React.Component {
     };
   }
 
+  /**
+   * @method onChangeAllStatus
+   */
   onChangeAllStatus() {
     let {vehicles} = this.props;
     let vehiclesActive = vehicles.filter((vehicle) => {
@@ -23,8 +34,11 @@ export default class SearchTable extends React.Component {
     this.setState({activeAll: vehiclesActive === vehicles.length});
   }
 
-  render () {
-
+  /**
+   * @method render
+   * @return {Object}
+   */
+  render() {
     let {vehicles} = this.props;
     let {activeAll}= this.state;
     let lines = [];
@@ -45,10 +59,13 @@ export default class SearchTable extends React.Component {
                 <div className="checkbox">
                 <label>
                   <input
-                    ref="checkAll" checked={activeAll}
+                    ref={(ref) => this.refsCheckAll = ref}
+                    checked={activeAll}
                     type="checkbox" onClick={() => this.toggleActive()}
                     />
-                  <span className="cr"><i className="cr-icon glyphicon glyphicon-ok"></i></span>
+                  <span className="cr">
+                    <i className="cr-icon glyphicon glyphicon-ok"></i>
+                  </span>
                 </label>
                 </div>
               </th>
@@ -72,14 +89,17 @@ export default class SearchTable extends React.Component {
           onClick={() => this.removeAll()}>
           Remover Todos os Selecionados
         </button>
-        <div ref="alert"></div>
+        <div ref={(ref) => this.refsAlert = ref}></div>
       </article>
     );
   }
 
+  /**
+   * @method toggleActive
+   */
   toggleActive() {
     let {vehicles} = this.props;
-    let activeAll = this.refs.checkAll.checked;
+    let activeAll = this.refsCheckAll.checked;
 
     vehicles.map((vehicle) => {
       vehicle.setActived(activeAll);
@@ -89,7 +109,27 @@ export default class SearchTable extends React.Component {
     this.setState({activeAll});
   }
 
+  /**
+   * @method removeAll
+   */
   removeAll() {
+    ReactDom.render(
+      <SweetAlert
+        type="warning"
+        title="Deseja excluir estes veículos?"
+        showCancel
+        cancelBtnBsStyle="default"
+        onConfirm={() => this.onConfirmRemove()}
+        onCancel={() => this.hideAlert()}/>,
+      this.refsAlert
+    );
+  }
+
+  /**
+   * @method onConfirmRemove
+   */
+  onConfirmRemove() {
+    this.hideAlert();
     let {vehicles} = this.props;
     vehicles.map((vehicle) => {
       if (vehicle.isActive()) {
@@ -98,5 +138,14 @@ export default class SearchTable extends React.Component {
 
       this.setState({activeAll: false});
     });
+  }
+
+  /**
+   * @method hideAlert
+   */
+  hideAlert() {
+    ReactDom.unmountComponentAtNode(
+      this.refsAlert
+    );
   }
 }

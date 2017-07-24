@@ -1,8 +1,8 @@
 import React from 'react';
-import ReactDom from 'react-dom';
 import Promise from 'bluebird';
 
 import Vehicles from './../collection/vehicles';
+import Vehicle from './../model/vehicle';
 
 import SearchTable from './search-table';
 import SearchNav from './search-nav';
@@ -12,12 +12,17 @@ import InitialData from './../config/initial-data.json';
 
 let vehicles = null;
 
+/**
+ * @class Search
+ */
 export default class Search extends React.Component {
-
+  /**
+   * @method constructor
+   * @param {Object} props
+   */
   constructor(props) {
     super(props);
 
-    // force reload fetch
     vehicles = new Vehicles();
 
     this.state = {
@@ -31,6 +36,9 @@ export default class Search extends React.Component {
     vehicles.fetch().then(() => this.setVehicles());
   }
 
+  /**
+   * @method componentDidMount
+   */
   componentDidMount() {
     vehicles.on({
       destroy: () => this.setVehicles(),
@@ -41,7 +49,11 @@ export default class Search extends React.Component {
     }
   }
 
-  render () {
+  /**
+   * @method render
+   * @return {Object}
+   */
+  render() {
     let {
       vehicles,
       totalItems,
@@ -58,7 +70,7 @@ export default class Search extends React.Component {
           <div className="alert alert-warning no-vehicles">
             <b>Atenção!</b> Não há veículos cadastrados.
           </div> :
-          <SearchTable vehicles={vehicles}/>
+          <SearchTable vehicles={vehicles} key={Math.random()}/>
         }
 
         <SearchNav
@@ -72,13 +84,16 @@ export default class Search extends React.Component {
     );
   }
 
+  /**
+   * @method setVehicles
+   */
   setVehicles() {
     let vehiclesResult = this.filterVehicles(vehicles);
 
     if (vehiclesResult.length) {
       let {page, itemsByPage} = this.state;
       let totalPage = Math.ceil(vehiclesResult.length/itemsByPage) - 1;
-      if (page > totalPage){
+      if (page > totalPage) {
         page = totalPage;
       }
 
@@ -101,31 +116,49 @@ export default class Search extends React.Component {
     }
   }
 
+  /**
+   * @method onChangePage
+   * @param {Number} page
+   */
   onChangePage(page) {
     this.setState({page}, () => this.setVehicles());
   }
 
+  /**
+   * @method onSubmit
+   * @param {String} text
+   */
   onSubmit(text) {
     this.setState({text}, () => this.setVehicles());
   }
 
+  /**
+   * @method stringFormatter
+   * @param {String} string
+   * @return {String}
+   */
   stringFormatter(string) {
     return string.toUpperCase()
-    .replace(/[ÀÁÂÃÄÅÃ]/g,"A")
-    .replace(/[ÈÉÊËẼ]/g,"E")
-    .replace(/[ÌÍÎÏĨ]/g, "I")
-    .replace(/[ÒÓÔÖÕ]/g, "O")
-    .replace(/[ÙÚÛÜŨ]/g, "U")
-    .replace(/[Ç]/g,"C")
+    .replace(/[ÀÁÂÃÄÅÃ]/g, 'A')
+    .replace(/[ÈÉÊËẼ]/g, 'E')
+    .replace(/[ÌÍÎÏĨ]/g, 'I')
+    .replace(/[ÒÓÔÖÕ]/g, 'O')
+    .replace(/[ÙÚÛÜŨ]/g, 'U')
+    .replace(/[Ç]/g, 'C')
     .replace(/\s+/g, ' ')
     .trim();
   }
 
+  /**
+   * @method filterVehicles
+   * @param {Object} vehicles
+   * @return {Object}
+   */
   filterVehicles(vehicles) {
     let {text} = this.state;
     if (text.length) {
       text = this.stringFormatter(text).replace(/(.)/g, ($1) => {
-        if(/[^A-z0-9]/g.test($1)){
+        if (/[^A-z0-9]/g.test($1)) {
             return '\\'+$1;
         }
         return $1;
@@ -145,9 +178,20 @@ export default class Search extends React.Component {
     return vehicles;
   }
 
+  /**
+   * @method createInitialList
+   */
   createInitialList() {
     Cookies.set('isFirst', true);
-    InitialData.map((vehicle) => vehicles.create(vehicle));
-  }
+    let data = InitialData.map((vehicle) =>
+      new Promise((resolve, reject) =>
+        (new Vehicle(vehicle)).save().then(resolve).catch(reject)
+      )
+    );
 
+    Promise.all(data).then(() => {
+      vehicles = new Vehicles();
+      vehicles.fetch({reset: true}).then(() => this.setVehicles());
+    });
+  }
 }

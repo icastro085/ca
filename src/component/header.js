@@ -1,8 +1,14 @@
 import React from 'react';
-import ReactDom from 'react-dom';
 
+/**
+ * @class Header
+ */
 export default class Header extends React.Component {
-  render () {
+  /**
+   * @method render
+   * @return {Object}
+   */
+  render() {
     return (
       <header>
         <div className="logo"/>

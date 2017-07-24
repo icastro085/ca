@@ -1,7 +1,7 @@
 [
   {
     "combustivel": "Flex",
-    "imagem": null,
+    "imagem": "",
     "marca": "Volkswagem",
     "modelo": "Gol",
     "placa": "FFF-5498",
@@ -9,7 +9,7 @@
   },
   {
     "combustivel": "Gasolina",
-    "imagem": null,
+    "imagem": "",
     "marca": "Volkswagem",
     "modelo": "Fox",
     "placa": "FOX-4125",

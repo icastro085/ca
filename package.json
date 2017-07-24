@@ -29,6 +29,7 @@
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.4",
     "eslint-config-google": "^0.8.0",
+    "eslint-plugin-react": "^7.1.0",
     "extract-text-webpack-plugin": "^2.1.2",
     "file-loader": "^0.11.2",
     "gulp": "^3.9.1",
