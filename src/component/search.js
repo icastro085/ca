@@ -147,11 +147,7 @@ export default class Search extends React.Component {
 
   createInitialList() {
     Cookies.set('isFirst', true);
-    let data = InitialData.map((v) => new Promise((resolve, reject) => {
-        vehicles.create(v).then(resolve).catch(reject);
-    }));
-    Promise.all(data)
-      .then(() => this.setVehicles());
+    InitialData.map((vehicle) => vehicles.create(vehicle));
   }
 
 }
