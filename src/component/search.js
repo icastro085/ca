@@ -77,6 +77,11 @@ export default class Search extends React.Component {
 
     if (vehiclesResult.length) {
       let {page, itemsByPage} = this.state;
+      let totalPage = Math.ceil(vehiclesResult.length/itemsByPage) - 1;
+      if (page > totalPage){
+        page = totalPage;
+      }
+
       let begin = page * itemsByPage;
       let end = begin + itemsByPage;
       let totalItems = vehiclesResult.length;
@@ -86,6 +91,7 @@ export default class Search extends React.Component {
           end
         ),
         totalItems,
+        page: page,
       });
     } else {
       this.setState({
