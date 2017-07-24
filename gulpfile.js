@@ -26,7 +26,7 @@ gulp.task('webpack-dev-server', (callback) => {
     stats: {colors: true},
     contentBase: './src',
     watchContentBase: true,
-    // publicPath: '/js/',
+    publicPath: '/',
     setup(app) {
     },
   });
@@ -51,6 +51,7 @@ gulp.task('copy', () => {
   return gulp.src(
     [
       './src/index.html',
+      './src/img/**/**',
     ], {base: 'src'}
   ).pipe(gulp.dest('./public'));
 });
@@ -88,4 +89,4 @@ gulp.task('open', () => {
 });
 
 gulp.task('default', ['build']);
-gulp.task('start', [/* 'eslint', */'webpack-dev-server', 'open', 'watch']);
+gulp.task('start', ['eslint', 'webpack-dev-server', 'open', 'watch']);
