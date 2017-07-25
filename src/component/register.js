@@ -33,7 +33,12 @@ export default class Register extends React.Component {
     });
 
     if (id) {
-      vehicle.fetch(() => this.setState({vehicle}));
+      vehicle.fetch().then(() => {
+        let price = parseFloat(vehicle.get('valor') || 0);
+        price = price.toLocaleString('pt-Br', {minimumFractionDigits: 2});
+        vehicle.set('valor', price);
+        this.setState({vehicle});
+      });
     }
 
     this.state = {
